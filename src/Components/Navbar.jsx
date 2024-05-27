@@ -1,4 +1,4 @@
-import { Link, BrowserRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -11,7 +11,11 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 
-const pages = ['Rockets', 'Missions', 'Profile'];
+const pages = [
+    { label: 'Rockets', route: '/rockets' },
+    { label: 'Missions', route: '/missions' },
+    { label: 'Profile', route: '/profile' }
+];
 
 function ResponsiveAppBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -23,14 +27,14 @@ function ResponsiveAppBar() {
     };
 
     return (
-        <AppBar position="static" sx={{ backgroundColor: 'black', margin: 0}} >
+        <AppBar position="static" sx={{ backgroundColor: 'black', margin: 0 }} >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
                         variant="h6"
                         noWrap
-                        component="a"
-                        href="#app-bar-with-responsive-menu"
+                        component={Link}
+                        to="/"
                         sx={{
                             mr: 2,
                             display: { xs: 'none', md: 'flex' },
@@ -73,13 +77,13 @@ function ResponsiveAppBar() {
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center">{page}</Typography>
+                                <MenuItem key={page.label} onClick={handleCloseNavMenu} component={Link} to={page.route}>
+                                    <Typography textAlign="center">{page.label}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
-                    <Typography variant="h6">
+                    <Typography variant="h6" component={Link} to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
                         Space Traveler's Hub
                     </Typography>
                     <Typography
@@ -105,11 +109,12 @@ function ResponsiveAppBar() {
                     <Box sx={{ display: { xs: 'none', md: 'flex' }, ml: 'auto' }}>
                         {pages.map((page) => (
                             <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
+                                key={page.label}
+                                component={Link}
+                                to={page.route}
                                 sx={{ my: 2, color: 'white', display: 'block' }}
                             >
-                                {page}
+                                {page.label}
                             </Button>
                         ))}
                     </Box>
